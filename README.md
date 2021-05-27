@@ -1,6 +1,6 @@
 # UCDPA_LiamCarroll
 
-Project submission for UCD Professional Academy's Specialist Certificate in Data Analytics. 
+Project submission for UCD Professional Academy's Specialist Certificate in Data Analytics Essentials. 
 
 This is the Python 3 script for reviewing the Fantasy Premier League (FPL) API and other season datasets to gain insights, including adopting machine learning techniques to predict outcome of English Premier League (EPL) based on various FPL ratings and attributes.
 
