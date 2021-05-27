@@ -22,10 +22,12 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 
-import warnings
-warnings.filterwarnings("ignore")
+# option to supress warnings
+#import warnings
+#warnings.filterwarnings("ignore")
 
 #**********************************************SETP 2: ACCESS THE DATA##################################################################
+# This Step is commented-out in its entirety using triple-quoted strings
 '''# Step 2: Access the data
 
 df_list = [] # initialise a list to store the dataframes that will be built up during this step
@@ -98,8 +100,11 @@ fixtures_1920=pd.read_csv('fixtures_1920.csv')
 team_info_1819_df=pd.read_csv('team_info_1819_df.csv')
 fixtures_1819=pd.read_csv('fixtures_1819.csv')
 '''
+
 #**********************************************STEP 3: EXPLOTATORY DATA ANALYSIS (EDA)##################################################################
 # Step 3 - Exploratory Data Analysis (EDA)
+
+# This Step is commented-out until EDA Round 2 using triple-quoted strings
 
 #EDA Round 1
 '''# initial analysis with .head() and .tail()
@@ -124,11 +129,11 @@ for df in df_list:
     print('*'*50)
     print('Looking at .columns') # provides list of the columns of each dataframe
     print(df.columns)
-    print('*'*50)'''
+    print('*'*50)
 
 #Data manipulation Round 1
 # Here we want to combine the information of the fixtures and team information for each season
-'''
+
 # first, we update the columns in each dataframe for consistency
 # A number of redundant columns are dropped at this point, mainly relating to the time of the matches/team submission deadlines, length in minutes etc.
 team_skill_2021_df = team_info_2021_df[['id', 'name','strength_overall_home','strength_overall_away',
@@ -201,7 +206,8 @@ fixtures_3_years.reset_index(inplace = True)
 fixtures_3_years.to_csv('fixtures_3_years.csv') # data from the FPL API saved on 20 May 2021
 '''
 
-# EDA Round 2 - exploring our combined dataframe:
+# EDA Round 2
+# Exploring our combined dataframe:
 # First, read in the saved data (csv file) here:
 fixtures_3_years = pd.read_csv('fixtures_3_years.csv') # reading in the saved FPL data from 20 May 2021 previously saved as csv
 
@@ -218,7 +224,7 @@ fixtures_3_years = pd.read_csv('fixtures_3_years.csv') # reading in the saved FP
 # As the missing value relate to where the fixture score values are missing, it is likely that this relates to where the dataframe includes matches that have not yet been played
 #print(fixtures_3_years.loc[fixtures_3_years['result'] == 'match pending', 'code'].isnull().count())
 
-# heatmap of missing values
+# Create heatmap of missing values
 sns.heatmap(fixtures_3_years.isnull(),yticklabels=False,cbar=False,cmap='viridis').set(ylabel ="Null values denoted in yellow", xlabel = "Feature",title="Check for null values (1)")
 plt.savefig("check_for_nulls_1.png",bbox_inches="tight")
 #plt.show()
@@ -228,7 +234,7 @@ plt.close()
 #fixtures_3_years = fixtures_3_years[fixtures_3_years.result!='match pending']
 fixtures_3_years=fixtures_3_years.dropna()
 
-# Here we create a heatmap to confirm that there are no missing values
+# Create another heatmap to confirm that there are no missing values
 sns.heatmap(fixtures_3_years.isnull(),yticklabels=False,cbar=False,cmap='viridis').set(ylabel ="Null values denoted in yellow", xlabel = "Feature",title="Check for null values (2)")
 plt.savefig("check_for_nulls_2.png",bbox_inches="tight")
 #plt.show()
@@ -430,7 +436,6 @@ def get_gw_table_movements(gw=38):
 # get_gw_table_movements() #to call function
 
 
-
 # Regex
 
 # creating a function that calls FPL API and gathers information regarding player injuries using Regex
@@ -536,8 +541,10 @@ list_of_features = ['team_h_difficulty',
        'strength_defence_home', 'strength_overall_away',
        'strength_attack_away', 'strength_defence_away', 'covid',
        'diffrank', 'diffstrength_overall', 'diff_def_v_att', 'diff_att_v_def','covid']
-# list_of_features_filtered = ['diffrank','diffstrength_overall', 'diff_def_v_att', 'diff_att_v_def'] #filtered list for primary features
-#and pass the list of features to note them as the feature rows
+
+# list_of_features_filtered = ['diffrank','diffstrength_overall', 'diff_def_v_att', 'diff_att_v_def'] #filtered list eventually evaluating classifiers on primary features
+
+# pass the list of features to note them as the feature rows
 X_all = fixtures_3_years[list_of_features]
 #print(X_all.info())
 
@@ -555,7 +562,7 @@ sns.heatmap(train_data.astype(float).corr(),linewidths=0.1,vmax=1.0,
 #plt.show()
 plt.close()
 
-#and ranking the top features
+#and Heatmap ranking the top features
 plt.figure(figsize=(14,12))
 plt.title('Pearson Correlation of Features with Target - top features', y=1.05, size=15)
 k = 11 # number of variables for heatmap
@@ -569,14 +576,14 @@ plt.close()
 
 
 
-# split training and test data (we stratify given that the proportion of H, D and A are not equal)
+# split training and test data (we stratify given that the proportion of Away-win and not are unequal)
 X_train, X_test,y_train,y_test = train_test_split(X_all, y_all, test_size=.8,stratify=y_all,random_state=4)
 
 # we create a pre-defined list of the classifiers that we wish to fit to the data
 classifiers = [('Logistic Regression', LogisticRegression()), ('K Nearest Neighbours', KNeighborsClassifier()), ('Decision Tree Classifier', DecisionTreeClassifier()), ('Random Forest',  RandomForestClassifier()), ('SVC',SVC())]
 
-# we create a function that takes in a pre-defined list of classifiers that fits and predicts.
-# Confusion Matrix, Classification report and accuracy scores returned
+# Ceate a function that takes in a pre-defined list of classifiers that fits and predicts.
+# Function to return Confusion Matrix, Classification report and accuracy scores for each classifier
 # A pipeline is used to pre-scale the data
 def fit_predict_classifiers(classifiers):
     fit_predict_results_dict = {}
@@ -610,8 +617,8 @@ def fit_predict_classifiers(classifiers):
     return fit_predict_results_df
 
 
-# we call the function fit_predict_classifiers() passing in the list of pre-defined classifiers
-# we label the resulting dataframe and print it to observe the accuracy from each classifier
+# Call the function fit_predict_classifiers() passing in the list of pre-defined classifiers
+# Label the resulting dataframe and print it to observe the accuracy from each classifier
 
 #print("*" * 25)
 #fit_predict_results_df = fit_predict_classifiers(classifiers)
@@ -620,8 +627,8 @@ def fit_predict_classifiers(classifiers):
 #print(fit_predict_results_df)
 #print("*" * 25)
 
-# we undertake k-fold cross validation
-# we create a function that takes in the pre-defined list of classifiers that provides cross validation of the results observed eariler
+# Undertaking k-fold cross validation
+# Create a function that takes in the pre-defined list of classifiers that provides cross validation of the results observed eariler
 # A pipeline is used to pre-scale the data
 def get_kfold_scores_with_scaling(classifiers,k):
     k_fold_scoring_dict = {}
@@ -633,7 +640,7 @@ def get_kfold_scores_with_scaling(classifiers,k):
     k_fold_with_scaling_scoring_df = k_fold_with_scaling_scoring_df[['mean score','score standard deviation','scores']]
     return k_fold_with_scaling_scoring_df
     
-# we call the function with k = 10 fold cross validation
+# Call the function with k = 10 fold cross validation
 k = 10
 #k_fold_with_scaling_scoring_df = get_kfold_scores_with_scaling(classifiers,k)
 #print("*" * 25)
@@ -642,7 +649,7 @@ k = 10
 #print("*" * 25)
 
 
-# plot ROC curves and determine AUC
+# Plot ROC curves and determine AUC
 def get_roc_curves(classifiers):
     fig = plt.figure(figsize=(8,4))
     # ROC curve and AUC
@@ -796,6 +803,5 @@ def get_KMeans(n_clusters=2):
     fixtures_3_years['KMeans_test'] = fixtures_3_years['result_binary'].apply(lambda x: x)
     labels = kmeans.labels_
     correct_labels = sum(fixtures_3_years['KMeans_test'] == labels)
-    print(
-        f'KMeans correct labels summary: KMeans correctly clustered {correct_labels} out of {len(fixtures_3_years)}, for overall accuracy of {100 * float(correct_labels / (len(fixtures_3_years))):.3f}%')
+    print(f'KMeans correct labels summary: KMeans correctly clustered {correct_labels} out of {len(fixtures_3_years)}, for overall accuracy of {100 * float(correct_labels / (len(fixtures_3_years))):.3f}%')
 # get_KMeans(2) #to call the function
