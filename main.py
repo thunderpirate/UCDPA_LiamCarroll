@@ -1,4 +1,4 @@
-#**********************************************STEP 1: IMPORTATION OF PYTHON LIBRARIES##################################################################
+#**********************************************STEP 1: IMPORTATION OF PYTHON LIBRARIES*****************************************************
 # Step 1: Importation of Python libraries
 
 # libraries for data gathering, analysis and visualisation:
@@ -26,7 +26,7 @@ from sklearn.cluster import KMeans
 #import warnings
 #warnings.filterwarnings("ignore")
 
-#**********************************************SETP 2: ACCESS THE DATA##################################################################
+#**********************************************SETP 2: ACCESS THE DATA***********************************************************************
 # This Step is commented-out in its entirety using triple-quoted strings
 '''# Step 2: Access the data
 
@@ -78,20 +78,20 @@ df_list.append(team_info_1819_df)
 fixtures_1819=pd.read_csv('https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2018-19/fixtures.csv')
 fixtures_1819['season']='2018/19'
 fixtures_1819.df_name='fixtures_1819'
-df_list.append(fixtures_1819)'''
+df_list.append(fixtures_1819)
 
-'''# to convert the above to csv files and save to local directory:
+# to convert the above to csv files and save to local directory:
 
 names = [df.df_name for df in df_list]
 for df in df_list:
     df.to_csv(df.df_name + '.csv')
-'''
 
-'''# to load in the saved csv files
+
+# to load in the saved csv files
 
 for df in df_list:
-    df = pd.read_csv(df.df_name + '.csv')'''
-'''
+    df = pd.read_csv(df.df_name + '.csv')
+
 #Can otherwise be undertaken with:
 team_info_2021_df=pd.read_csv('team_info_2021_df.csv')
 fixtures_2021=pd.read_csv('fixtures_2021.csv')
@@ -101,7 +101,7 @@ team_info_1819_df=pd.read_csv('team_info_1819_df.csv')
 fixtures_1819=pd.read_csv('fixtures_1819.csv')
 '''
 
-#**********************************************STEP 3: EXPLOTATORY DATA ANALYSIS (EDA)##################################################################
+#**********************************************STEP 3: EXPLORATORY DATA ANALYSIS (EDA)*****************************************************
 # Step 3 - Exploratory Data Analysis (EDA)
 
 # This Step is commented-out until EDA Round 2 using triple-quoted strings
